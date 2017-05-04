@@ -21,6 +21,7 @@ import javax.swing.JDesktopPane;
 import javax.swing.JPanel;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 
 //abstract window toolkit (awt)
 import java.awt.BorderLayout;
@@ -44,12 +45,13 @@ public class MyFirstGUIApp {
    private JMenu helpMenu;
    private JMenuItem exitItem;
    private JMenuItem aboutItem;
+   private JOptionPane pane;
    
    //constructor
    public MyFirstGUIApp() {
       initComponents();
       statusLabel.setText("Initialization Complete.");
-   
+   }
    //create GUI and make it visible to user
    public void initComponents() {
       try {
@@ -89,7 +91,24 @@ public class MyFirstGUIApp {
       helpMenu.add(aboutItem);
       menuBar.add(fileMenu);
       menuBar.add(helpMenu);
+      
+      // listener for exit menu item
+      exitItem.addActionListener(
+            new ActionListener() {
+               public void actionPerformed(ActionEvent e) {
+                  exitActionPerformed();
+               }
+            }
+      );
    
+      // add listener for about menu item
+      aboutItem.addActionListener(
+            new ActionListener() {
+               public void actionPerformed(ActionEvent e) {
+                  aboutActionPerformed();
+               }
+            }
+      );
       //setup panel
       panel.setLayout(new BorderLayout());
       splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
@@ -113,23 +132,6 @@ public class MyFirstGUIApp {
       frame.setVisible(true);
    } //end of initComponents
    
-   // listener for exit menu item
-   exitItem.addActionListener(
-      new ActionListener() {
-         public void actionPerformed(ActionEvent e) {
-            exitActionPerformed();
-         }
-      }
-   );
-   
-   // add listener for about menu item
-   aboutItem.addActionListener(
-      new ActionListener() {
-         public void actionPerformed(ActionEvent e) {
-            aboutActionPerformed();
-         }
-      }
-   );
    public void exitActionPerformed(){
       frame.dispose();
    }
